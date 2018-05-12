@@ -1,0 +1,12 @@
+name: Shiny_Project
+title: Shiny_Project
+username:
+account: egruhn
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 341920
+bundleId: 1370478
+url: https://egruhn.shinyapps.io/Shiny_Project/
+when: 1526146019.77654
+asMultiple: FALSE
+asStatic: FALSE
