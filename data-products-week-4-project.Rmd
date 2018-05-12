@@ -1,0 +1,66 @@
+---
+title: Developing Data Products project - Shiny Application and Reproducible Pitch
+author: "Erich F Gruhn"
+date: "May 12, 2018"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction
+
+ - This presentation represents the reproducable pitch for the project assignment of week 4 in, ***Developing Data Products course from Coursera*** (<https://www.coursera.org/learn/data-products>). 
+ 
+ - The presentation is meant to show information about the associated shiny project that predicts the Miles Per Gallon gas consumption based on a number of variables from a dataset of cars. 
+
+ - The presentation was generated using ***RStudio***(<https://www.rstudio.com>) and ***Slidify***(<http://slidify.org>) framework.
+
+## Application
+
+ - The project assignment was to develop a web application. The application was named ***Miles Per Gallon Prediction***. An instance is up & running at <https://egruhn.shinyapps.io/Shiny_Project/>.
+ 
+
+ - This application shows an example of making a web application using R and [Shiny](https://shiny.rstudio.com) framework together.
+ 
+ - In the application, a prediction model is generated, based on a car parameters dataset (HP, weight, gears, etc.). The user can freely adjust the UI values in order to simulate the parameters of a hypothetical car and be able to predict its Miles Per Gallon consumption.
+ 
+ - The application and the current presentation source codes can be found at <https://github.com/egruhn/Developing-Data-Products-project>. The contains 3 files: *ui.R* (UI), *server.R* (backend) and *rfModel.R* (Random Forest predictor).
+  
+## Dataset
+
+Dataset used by the application is the [Motor Trend Car Road Tests](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) (from now on *'mtcars'*). The data was extracted from the ***1974 Motor Trend*** US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973-74 models).
+
+Next, the dataset structure: 
+```{r cars, echo = TRUE}
+str(mtcars)
+```
+
+## Prediction
+
+A Random Forest prediction model is generated and trained using the *'mtcars'* dataset. The goal of this model is to predict the fuel consumption (***mpg*** variable) based on the rest of the variables:
+```{r echo = FALSE}
+suppressWarnings(suppressMessages(library(caret)))
+suppressWarnings(suppressMessages(library(randomForest)))
+
+set.seed(198203)
+
+```
+
+```{r echo = TRUE}
+customTrainControl <- trainControl(method = "cv", number = 10)
+carsRFModel <- function() {
+  return(
+    train(
+      mpg ~ ., 
+      data = mtcars,
+      method = "rf",
+      trControl = customTrainControl
+    )
+  )
+}
+
+carsRFModel()
+```
+
